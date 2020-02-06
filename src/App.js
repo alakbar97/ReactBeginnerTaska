@@ -1,7 +1,6 @@
-import React , { Component } from 'react';
+import React, { Component } from 'react';
 import './style.css';
 import Person from './Person/Person';
-
 
 // const App=props=>{
 
@@ -35,73 +34,89 @@ import Person from './Person/Person';
 //   );
 // }
 
-class App extends Component{
-  state={
-    people:[
-      {name:"Ali",age:45},
-      {name:"Poli",age:98}
+class App extends Component {
+  state = {
+    people: [
+      { id: '1', name: "Ali", age: 45 },
+      { id: '2', name: "Poli", age: 98 }
     ],
-    showPeople:false
+    showPeople: false
   }
 
-  alertButtonHandler=(newName)=>{
+  alertButtonHandler = (newName) => {
     this.setState({
-      people:[
-        {name:newName,age:45},
-        {name:newName,age:98}
+      people: [
+        { name: newName, age: 45 },
+        { name: newName, age: 98 }
       ]
     })
   }
-  
- changeNameHandler=(event)=>{
-  this.setState({
-    people:[
-      {name:event.target.value,age:45},
-      {name:"Poli",age:98}
-    ]
-  })
-  }
 
-  togglePeopleHandler=()=>{
-    const show=this.state.showPeople;
+  changeNameHandler = (event, id) => {
+    const personIndex = this.state.people.findIndex(w => w.id === id);
+
+    const person = { ...this.state.people[personIndex] };
+
+    //const person=Object.assign({},this.state.people[personIndex]);
+
+    person.name = event.target.value;
+
+    const people = [...this.state.people];
+    people[personIndex] = person;
+
+
     this.setState({
-      showPeople:!show
+      people: people
     })
   }
 
-  render(){
-    const customStyle={
-      backgroundColor:'white',
-      border:'1px solid black',
-      cursor:'pointer',
-      padding:'5px',
-      boxShadow:'0 2px 2px #ccc'
+  togglePeopleHandler = () => {
+    const show = this.state.showPeople;
+    this.setState({
+      showPeople: !show
+    })
+  }
+  deletePersonHandler = (personIndex) => {
+    //const people=this.state.people.slice();
+    const people = [...this.state.people];
+    people.splice(personIndex, 1);
+    this.setState({
+      people: people
+    });
+  }
+
+  render() {
+    const customStyle = {
+      backgroundColor: 'white',
+      border: '1px solid black',
+      cursor: 'pointer',
+      padding: '5px',
+      boxShadow: '0 2px 2px #ccc'
     }
 
-    let people=null;
-    if(this.state.showPeople){
-      people=(
+    let people = null;
+    if (this.state.showPeople) {
+      people = (
         <div>
-        <Person
-        onclick={this.alertButtonHandler.bind(this,"Named by Props")}
-        changed={this.changeNameHandler}
-        name={this.state.people[0].name}
-        age={this.state.people[0].age}><h1>It is children propperty</h1></Person>
-        <Person
-        name={this.state.people[1].name}
-          age={this.state.people[1].age}
-          changed={this.changeNameHandler}/>
-    </div> 
+          {this.state.people.map((person, index) => {
+            return <Person
+              changed={(event) => this.changeNameHandler(event, person.id)}
+              name={person.name}
+              age={person.age}
+              click={() => this.deletePersonHandler(index)}
+              key={person.id} />
+          })}
+        </div>
       );
     }
 
     return (
-      <div>   
-      <h6>Hello , World</h6>   
-      <button style={customStyle} onClick={this.togglePeopleHandler}>Toggle People</button>
-     {people}
+      <div>
+        <h6>Hello , World</h6>
+        <button style={customStyle} onClick={this.togglePeopleHandler}>Toggle People</button>
+        {people}
       </div>
-      
+
     );
   }
 }
