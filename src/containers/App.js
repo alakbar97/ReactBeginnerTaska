@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './style.css';
-import Person from './Person/Person';
+import Radium from 'radium';
+import People from '../components/People/People';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 // const App=props=>{
 
@@ -38,7 +40,8 @@ class App extends Component {
   state = {
     people: [
       { id: '1', name: "Ali", age: 45 },
-      { id: '2', name: "Poli", age: 98 }
+      { id: '2', name: "Poli", age: 98 },
+      { id: '3', name: "Bona", age: 98 }
     ],
     showPeople: false
   }
@@ -76,6 +79,7 @@ class App extends Component {
       showPeople: !show
     })
   }
+
   deletePersonHandler = (personIndex) => {
     //const people=this.state.people.slice();
     const people = [...this.state.people];
@@ -87,33 +91,38 @@ class App extends Component {
 
   render() {
     const customStyle = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       border: '1px solid black',
       cursor: 'pointer',
       padding: '5px',
-      boxShadow: '0 2px 2px #ccc'
+      boxShadow: '0 2px 2px #ccc',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     }
 
     let people = null;
     if (this.state.showPeople) {
       people = (
-        <div>
-          {this.state.people.map((person, index) => {
-            return <Person
-              changed={(event) => this.changeNameHandler(event, person.id)}
-              name={person.name}
-              age={person.age}
-              click={() => this.deletePersonHandler(index)}
-              key={person.id} />
-          })}
-        </div>
+        <People
+          people={this.state.people}
+          changed={this.changeNameHandler}
+          deleted={this.deletePersonHandler} />
       );
+      customStyle.backgroundColor = 'red';
+      customStyle[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
     }
-
     return (
       <div>
-        <h6>Hello , World</h6>
-        <button style={customStyle} onClick={this.togglePeopleHandler}>Toggle People</button>
+        <Cockpit
+          people={this.state.people}
+          style={customStyle}
+          toggle={this.togglePeopleHandler} />
         {people}
       </div>
 
@@ -121,4 +130,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Radium(App);

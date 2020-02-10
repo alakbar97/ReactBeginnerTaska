@@ -5,4 +5,11 @@ div {
 div h1 {
   font-weight: bold;
 }
+
+.red{
+  color:red;
+}
+.bold{
+  font-weight: bolder;
+}
 /*# sourceMappingURL=style.css.map */

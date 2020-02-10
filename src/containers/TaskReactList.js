@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Validation from './Validation/Validation';
-import Char from './Char/Char';
+import Validation from '../components/Validation/Validation';
+import Char from '../components/Char/Char';
 
 export default class TaskReactList extends Component {
     state = {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import UserOutput from './UserOutput/UserOutput'
-import UserInput from './UserInput/UserInput'
+import UserOutput from '../components/UserOutput/UserOutput'
+import UserInput from '../components/UserInput/UserInput'
 
 export default class TaskReact extends Component {
     state={

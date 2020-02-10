@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class Validation extends Component {
     render() {
