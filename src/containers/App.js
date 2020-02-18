@@ -111,15 +111,11 @@ class App extends Component {
           changed={this.changeNameHandler}
           deleted={this.deletePersonHandler} />
       );
-      customStyle.backgroundColor = 'red';
-      customStyle[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-      }
     }
     return (
       <div>
         <Cockpit
+          isShow={this.state.showPeople}
           people={this.state.people}
           style={customStyle}
           toggle={this.togglePeopleHandler} />

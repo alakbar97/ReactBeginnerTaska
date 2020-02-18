@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../containers/style.css';
+import Radium from 'radium';
 
 const Cockpit = (props) => {
     const classes = [];
+    if (props.isShow) {
+        props.style.backgroundColor = 'red';
+        props.style[':hover'] = {
+            backgroundColor: 'salmon',
+            color: 'black'
+        }
+    }
     if (props.people.length <= 2) classes.push("red");
     if (props.people.length <= 1) classes.push("bold");
     return (
@@ -13,4 +21,4 @@ const Cockpit = (props) => {
     )
 }
 
-export default Cockpit;
+export default Radium(Cockpit);
