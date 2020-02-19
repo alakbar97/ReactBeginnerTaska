@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import './index.css';
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
@@ -11,15 +12,31 @@ import counterReducer from './store/reducers/counter';
 import resultReducer from './store/reducers/result';
 import Counter from './containers/Counter/Counter';
 import ReduxTaskPerson from './store/reducers/ReduxTaskReduce'
-import ReduxTask from './containers/ReduxTask/ReduxTask'
+import ReduxTask from './containers/ReduxTask/ReduxTask';
+
+
 const rooteReducer = combineReducers({
     ctr: counterReducer,
     rs: resultReducer
 });
 
-const store = createStore(rooteReducer);
+const logger = store => {
+    return next => {
+        return action => {
+            console.log('[Dispatching]', action);
+            const result = next(action);
 
-const newStore=createStore(ReduxTaskPerson);
+            console.log('[Middleware] next state', store.getState())
+
+            return result;
+        }
+    }
+}
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(rooteReducer, composeEnhancers(applyMiddleware(logger,thunk)));
+
+const newStore = createStore(ReduxTaskPerson); 
 
 ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(<TaskReact />, document.getElementById('rootDemo'));
