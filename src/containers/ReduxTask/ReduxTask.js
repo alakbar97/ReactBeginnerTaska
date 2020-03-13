@@ -58,7 +58,7 @@ const getPeople = (state) => {
 
 const addPerson = dispatch => {
     return {
-        onAdd: (name,age) => dispatch({ type: 'ADD',personData:{name:name,age:age} }),
+        onAdd: (name, age) => dispatch({ type: 'ADD', personData: { name: name, age: age } }),
         onDelete: (id) => dispatch({ type: 'DELETE', divId: id })
     };
 }

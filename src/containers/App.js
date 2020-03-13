@@ -121,7 +121,6 @@ class App extends Component {
           toggle={this.togglePeopleHandler} />
         {people}
       </div>
-
     );
   }
 }
